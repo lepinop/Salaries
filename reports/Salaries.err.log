@@ -26,8 +26,8 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['ridge = Pipeline(steps=[("preprocessor", preprocessor_robust), ("model", Ridge())])', 'lasso = Pipeline(steps=[("preprocessor", preprocessor_robust), ("model", Lasso())])', 'knn = Pipeline(steps=[("preprocessor", preprocessor_standard), ("model", KNeighborsRegressor())])', 'dtree = Pipeline(steps=[("preprocessor", preprocessor_standard), ("model", DecisionTreeRegressor(random_state=42))])', 'svr = Pipeline(steps=[("preprocessor", preprocessor_standard), ("model", SVR())])']
+['ridge = Pipeline(steps=[("preprocessor", preprocessor_standard), ("model", Ridge())])', 'lasso = Pipeline(steps=[("preprocessor", preprocessor_standard), ("model", Lasso())])', 'knn = Pipeline(steps=[("preprocessor", preprocessor_standard), ("model", KNeighborsRegressor())])', 'dtree = Pipeline(steps=[("preprocessor", preprocessor_standard), ("model", DecisionTreeRegressor(random_state=42))])', 'svr = Pipeline(steps=[("preprocessor", preprocessor_standard), ("model", SVR())])']
 ...
-['xgb_search = RandomizedSearchCV(xgb, xgb_params, n_iter=10, cv=3, scoring="neg_mean_squared_error", random_state=42, n_jobs=-1)', 'mlp_search = RandomizedSearchCV(mlp, mlp_params, n_iter=10, cv=3, scoring="neg_mean_squared_error", random_state=42, n_jobs=-1)', '', 'for search in [ridge_search, lasso_search, knn_search, dtree_search, svr_search, xgb_search, mlp_search]:', '    search.fit(X_train_reg, y_train_reg)']
+['xgb_search = RandomizedSearchCV(xgb, xgb_params, n_iter=30, cv=3, scoring="neg_mean_squared_error", random_state=42, n_jobs=-1, verbose=1)', 'mlp_search = RandomizedSearchCV(mlp, mlp_params, n_iter=30, cv=3, scoring="neg_mean_squared_error", random_state=42, n_jobs=-1)', '', 'for search in [ridge_search, lasso_search, knn_search, dtree_search, svr_search, xgb_search, mlp_search]:', '    search.fit(X_train_reg, y_train_reg)']
 -------------------
 

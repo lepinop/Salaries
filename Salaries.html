@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Tendencias Salariales en Empleos de Ciencia de Datos, AI y ML (2025) &#8212; Análisis de Salarios</title>
+    <title>Tendencias Salariales en Empleos de Ciencia de Datos, AI y ML (2025) &#8212; My sample book</title>
   
   
   
@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -58,10 +58,10 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'Salaries';</script>
-    <link rel="icon" href="_static/Salaries.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Welcome to your Jupyter Book" href="intro.html" />
+    <link rel="next" title="Modelo original: SalPred‑Trans — Transformer tabular cuantílico + Conformal Prediction" href="SalPredTrans_Improved_Grid.html" />
+    <link rel="prev" title="Modelos Clásicos vs. Transformers: Un Enfoque Comparativo en Regresión Tabular" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -153,8 +153,8 @@
       
     
     
-    <img src="_static/Salaries.png" class="logo__image only-light" alt="Análisis de Salarios - Home"/>
-    <script>document.write(`<img src="_static/Salaries.png" class="logo__image only-dark" alt="Análisis de Salarios - Home"/>`);</script>
+    <img src="_static/Salaries.png" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="_static/Salaries.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
   
   
 </a></div>
@@ -175,12 +175,13 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="intro.html">
-                    Welcome to your Jupyter Book
+                    Modelos Clásicos vs. Transformers: Un Enfoque Comparativo en Regresión Tabular
                 </a>
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>Tendencias Salariales en Empleos de Ciencia de Datos, AI y ML (2025)</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="SalPredTrans_Improved_Grid.html"><strong>Modelo original: SalPred‑Trans — Transformer tabular cuantílico + Conformal Prediction</strong></a></li>
 </ul>
 
     </div>
@@ -408,10 +409,12 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocesamiento">5. Preprocesamiento</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelos-y-busqueda-de-hiperparametros">6. Modelos y búsqueda de hiperparámetros</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funciones-auxiliares">7. Funciones auxiliares</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loop-para-evaluar-modelos-graficas-bds">8. Loop para evaluar modelos + gráficas + BDS</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataframe-de-resultados-y-grafico-comparativo">9. DataFrame de resultados y gráfico comparativo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loop-para-evaluar-modelos-graficas-bds-resultados-en-log">8. Loop para evaluar modelos + gráficas + BDS - resultados en Log</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataframe-de-resultados-y-grafico-comparativo-salario-en-usd">9. DataFrame de resultados y gráfico comparativo - Salario en USD</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion"><strong>Conclusión</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resultados-del-test-bds"><strong>Resultados del Test BDS</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-general">Conclusión general:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recomendaciones">📌 Recomendaciones</a></li>
 </ul>
 </li>
 </ul>
@@ -982,58 +985,56 @@ memory usage: 7.2+ MB
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\LUIS PINO\AppData\Local\Temp\ipykernel_27556\2877972932.py:12: FutureWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\LUIS PINO\AppData\Local\Temp\ipykernel_33872\2877972932.py:12: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   ax = sns.countplot(
-C:\Users\LUIS PINO\AppData\Local\Temp\ipykernel_27556\2877972932.py:12: UserWarning: The palette list has more values (8) than needed (4), which may not be intended.
+C:\Users\LUIS PINO\AppData\Local\Temp\ipykernel_33872\2877972932.py:12: UserWarning: The palette list has more values (8) than needed (4), which may not be intended.
   ax = sns.countplot(
-C:\Users\LUIS PINO\AppData\Local\Temp\ipykernel_27556\2877972932.py:12: FutureWarning: 
+C:\Users\LUIS PINO\AppData\Local\Temp\ipykernel_33872\2877972932.py:12: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   ax = sns.countplot(
-C:\Users\LUIS PINO\AppData\Local\Temp\ipykernel_27556\2877972932.py:12: UserWarning: The palette list has more values (8) than needed (3), which may not be intended.
+C:\Users\LUIS PINO\AppData\Local\Temp\ipykernel_33872\2877972932.py:12: UserWarning: The palette list has more values (8) than needed (3), which may not be intended.
   ax = sns.countplot(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\LUIS PINO\AppData\Local\Temp\ipykernel_27556\2877972932.py:12: FutureWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\LUIS PINO\AppData\Local\Temp\ipykernel_33872\2877972932.py:12: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   ax = sns.countplot(
-C:\Users\LUIS PINO\AppData\Local\Temp\ipykernel_27556\2877972932.py:12: UserWarning: 
+C:\Users\LUIS PINO\AppData\Local\Temp\ipykernel_33872\2877972932.py:12: UserWarning: 
 The palette list has fewer values (8) than needed (20) and will cycle, which may produce an uninterpretable plot.
   ax = sns.countplot(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\LUIS PINO\AppData\Local\Temp\ipykernel_27556\2877972932.py:12: FutureWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\LUIS PINO\AppData\Local\Temp\ipykernel_33872\2877972932.py:12: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   ax = sns.countplot(
-C:\Users\LUIS PINO\AppData\Local\Temp\ipykernel_27556\2877972932.py:12: UserWarning: 
+C:\Users\LUIS PINO\AppData\Local\Temp\ipykernel_33872\2877972932.py:12: UserWarning: 
+The palette list has fewer values (8) than needed (15) and will cycle, which may produce an uninterpretable plot.
+  ax = sns.countplot(
+C:\Users\LUIS PINO\AppData\Local\Temp\ipykernel_33872\2877972932.py:12: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  ax = sns.countplot(
+C:\Users\LUIS PINO\AppData\Local\Temp\ipykernel_33872\2877972932.py:12: UserWarning: 
 The palette list has fewer values (8) than needed (15) and will cycle, which may produce an uninterpretable plot.
   ax = sns.countplot(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\LUIS PINO\AppData\Local\Temp\ipykernel_27556\2877972932.py:12: FutureWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\LUIS PINO\AppData\Local\Temp\ipykernel_33872\2877972932.py:12: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   ax = sns.countplot(
-C:\Users\LUIS PINO\AppData\Local\Temp\ipykernel_27556\2877972932.py:12: UserWarning: 
-The palette list has fewer values (8) than needed (15) and will cycle, which may produce an uninterpretable plot.
-  ax = sns.countplot(
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\LUIS PINO\AppData\Local\Temp\ipykernel_27556\2877972932.py:12: FutureWarning: 
-
-Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
-
-  ax = sns.countplot(
-C:\Users\LUIS PINO\AppData\Local\Temp\ipykernel_27556\2877972932.py:12: UserWarning: The palette list has more values (8) than needed (3), which may not be intended.
+C:\Users\LUIS PINO\AppData\Local\Temp\ipykernel_33872\2877972932.py:12: UserWarning: The palette list has more values (8) than needed (3), which may not be intended.
   ax = sns.countplot(
 </pre></div>
 </div>
@@ -1431,6 +1432,7 @@ Name: count, dtype: int64
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 80% Train, 20% Test</span>
+<span class="n">y_full_price</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log1p</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;salary_in_usd&#39;</span><span class="p">])</span>
 <span class="n">X_train_reg</span><span class="p">,</span> <span class="n">X_test_reg</span><span class="p">,</span> <span class="n">y_train_reg</span><span class="p">,</span> <span class="n">y_test_reg</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
     <span class="n">X_full</span><span class="p">,</span> <span class="n">y_full_price</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
 <span class="p">)</span>
@@ -1463,29 +1465,9 @@ Name: count, dtype: int64
     <span class="p">(</span><span class="s2">&quot;scaler&quot;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">())</span>
 <span class="p">])</span>
 
-<span class="n">numeric_transformer_maxabs</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="p">[</span>
-    <span class="p">(</span><span class="s2">&quot;imputer&quot;</span><span class="p">,</span> <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">)),</span>
-    <span class="p">(</span><span class="s2">&quot;scaler&quot;</span><span class="p">,</span> <span class="n">MaxAbsScaler</span><span class="p">())</span>
-<span class="p">])</span>
-
-<span class="n">numeric_transformer_robust</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="p">[</span>
-    <span class="p">(</span><span class="s2">&quot;imputer&quot;</span><span class="p">,</span> <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">)),</span>
-    <span class="p">(</span><span class="s2">&quot;scaler&quot;</span><span class="p">,</span> <span class="n">RobustScaler</span><span class="p">())</span>
-<span class="p">])</span>
-
 <span class="n">preprocessor_standard</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
     <span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="n">categorical_transformer</span><span class="p">,</span> <span class="n">categorical_features</span><span class="p">),</span>
     <span class="p">(</span><span class="s2">&quot;num&quot;</span><span class="p">,</span> <span class="n">numeric_transformer_standard</span><span class="p">,</span> <span class="n">numeric_features</span><span class="p">)</span>
-<span class="p">])</span>
-
-<span class="n">preprocessor_maxabs</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
-    <span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="n">categorical_transformer</span><span class="p">,</span> <span class="n">categorical_features</span><span class="p">),</span>
-    <span class="p">(</span><span class="s2">&quot;num&quot;</span><span class="p">,</span> <span class="n">numeric_transformer_maxabs</span><span class="p">,</span> <span class="n">numeric_features</span><span class="p">)</span>
-<span class="p">])</span>
-
-<span class="n">preprocessor_robust</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
-    <span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="n">categorical_transformer</span><span class="p">,</span> <span class="n">categorical_features</span><span class="p">),</span>
-    <span class="p">(</span><span class="s2">&quot;num&quot;</span><span class="p">,</span> <span class="n">numeric_transformer_robust</span><span class="p">,</span> <span class="n">numeric_features</span><span class="p">)</span>
 <span class="p">])</span>
 </pre></div>
 </div>
@@ -1503,29 +1485,29 @@ Name: count, dtype: int64
 <p>Aquí encontramos la “mejor versión” de cada modelo.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ridge</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="p">[(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">preprocessor_robust</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">Ridge</span><span class="p">())])</span>
-<span class="n">lasso</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="p">[(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">preprocessor_robust</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">Lasso</span><span class="p">())])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ridge</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="p">[(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">preprocessor_standard</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">Ridge</span><span class="p">())])</span>
+<span class="n">lasso</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="p">[(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">preprocessor_standard</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">Lasso</span><span class="p">())])</span>
 <span class="n">knn</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="p">[(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">preprocessor_standard</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">KNeighborsRegressor</span><span class="p">())])</span>
 <span class="n">dtree</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="p">[(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">preprocessor_standard</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">))])</span>
 <span class="n">svr</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="p">[(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">preprocessor_standard</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">SVR</span><span class="p">())])</span>
-<span class="n">xgb</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="p">[(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">preprocessor_maxabs</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">XGBRegressor</span><span class="p">(</span><span class="n">objective</span><span class="o">=</span><span class="s2">&quot;reg:squarederror&quot;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">))])</span>
+<span class="n">xgb</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="p">[(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">preprocessor_standard</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">XGBRegressor</span><span class="p">(</span><span class="n">objective</span><span class="o">=</span><span class="s2">&quot;reg:squarederror&quot;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">))])</span>
 <span class="n">mlp</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="p">[(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">preprocessor_standard</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">MLPRegressor</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">early_stopping</span><span class="o">=</span><span class="kc">True</span><span class="p">))])</span>
 
 <span class="n">ridge_params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;model__alpha&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">]}</span>
-<span class="n">lasso_params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;model__alpha&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]}</span>
+<span class="n">lasso_params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;model__alpha&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">]}</span>
 <span class="n">knn_params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;model__n_neighbors&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">]}</span>
-<span class="n">dtree_params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;model__max_depth&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="kc">None</span><span class="p">]}</span>
+<span class="n">dtree_params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;model__max_depth&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="s2">&quot;model__min_samples_leaf&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span> <span class="s2">&quot;model__max_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;sqrt&quot;</span><span class="p">,</span> <span class="s2">&quot;log2&quot;</span><span class="p">]}</span>
 <span class="n">svr_params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;model__C&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="s2">&quot;model__kernel&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;rbf&quot;</span><span class="p">,</span> <span class="s2">&quot;linear&quot;</span><span class="p">]}</span>
-<span class="n">xgb_params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;model__n_estimators&quot;</span><span class="p">:</span> <span class="n">randint</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span> <span class="s2">&quot;model__max_depth&quot;</span><span class="p">:</span> <span class="n">randint</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="s2">&quot;model__learning_rate&quot;</span><span class="p">:</span> <span class="n">uniform</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)}</span>
-<span class="n">mlp_params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;model__hidden_layer_sizes&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">50</span><span class="p">,),</span> <span class="p">(</span><span class="mi">100</span><span class="p">,),</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="mi">50</span><span class="p">)],</span><span class="s2">&quot;model__alpha&quot;</span><span class="p">:</span> <span class="n">uniform</span><span class="p">(</span><span class="mf">0.0001</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span><span class="s2">&quot;model__activation&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;relu&quot;</span><span class="p">,</span> <span class="s2">&quot;tanh&quot;</span><span class="p">]}</span>
+<span class="n">xgb_params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;model__n_estimators&quot;</span><span class="p">:</span> <span class="n">randint</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">500</span><span class="p">),</span> <span class="s2">&quot;model__max_depth&quot;</span><span class="p">:</span> <span class="n">randint</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="s2">&quot;model__learning_rate&quot;</span><span class="p">:</span> <span class="n">uniform</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)}</span>
+<span class="n">mlp_params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;model__hidden_layer_sizes&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">50</span><span class="p">,),</span> <span class="p">(</span><span class="mi">100</span><span class="p">,),</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="mi">50</span><span class="p">)],</span> <span class="s2">&quot;model__alpha&quot;</span><span class="p">:</span> <span class="n">uniform</span><span class="p">(</span><span class="mf">0.0001</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span><span class="s2">&quot;model__activation&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;relu&quot;</span><span class="p">,</span> <span class="s2">&quot;tanh&quot;</span><span class="p">]}</span>
 
 <span class="n">ridge_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">ridge</span><span class="p">,</span> <span class="n">ridge_params</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_squared_error&quot;</span><span class="p">)</span>
-<span class="n">lasso_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">lasso</span><span class="p">,</span> <span class="n">lasso_params</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_squared_error&quot;</span><span class="p">)</span>
+<span class="n">lasso_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">lasso</span><span class="p">,</span> <span class="n">lasso_params</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_squared_error&quot;</span><span class="p">)</span>
 <span class="n">knn_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">knn</span><span class="p">,</span> <span class="n">knn_params</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_squared_error&quot;</span><span class="p">)</span>
 <span class="n">dtree_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">dtree</span><span class="p">,</span> <span class="n">dtree_params</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_squared_error&quot;</span><span class="p">)</span>
 <span class="n">svr_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">svr</span><span class="p">,</span> <span class="n">svr_params</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_squared_error&quot;</span><span class="p">)</span>
-<span class="n">xgb_search</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span><span class="n">xgb</span><span class="p">,</span> <span class="n">xgb_params</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_squared_error&quot;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">mlp_search</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span><span class="n">mlp</span><span class="p">,</span> <span class="n">mlp_params</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_squared_error&quot;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">xgb_search</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span><span class="n">xgb</span><span class="p">,</span> <span class="n">xgb_params</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_squared_error&quot;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">mlp_search</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span><span class="n">mlp</span><span class="p">,</span> <span class="n">mlp_params</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_squared_error&quot;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">search</span> <span class="ow">in</span> <span class="p">[</span><span class="n">ridge_search</span><span class="p">,</span> <span class="n">lasso_search</span><span class="p">,</span> <span class="n">knn_search</span><span class="p">,</span> <span class="n">dtree_search</span><span class="p">,</span> <span class="n">svr_search</span><span class="p">,</span> <span class="n">xgb_search</span><span class="p">,</span> <span class="n">mlp_search</span><span class="p">]:</span>
     <span class="n">search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_reg</span><span class="p">,</span> <span class="n">y_train_reg</span><span class="p">)</span>
@@ -1537,102 +1519,93 @@ Name: count, dtype: int64
 <section id="funciones-auxiliares">
 <h2>7. Funciones auxiliares<a class="headerlink" href="#funciones-auxiliares" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
-<li><p>evaluate_model → calcula métricas (MAE, MSE, RMSE, MAPE) para Train/Val/Test.</p></li>
-<li><p>bds_test → aplica el BDS Test para verificar si los residuos son independientes (ruido blanco).</p></li>
-<li><p>plot_predictions → gráfico real vs predicho para visualizar qué tan bien ajusta cada modelo.</p></li>
+<li><p>Evaluate_model → calcula métricas (MAE, MSE, RMSE, MAPE) para Train/Val/Test.</p></li>
 </ol>
 <p>Son funciones de apoyo para evitar repetir código.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">evaluate_model</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">):</span>
-    <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">split</span><span class="p">,</span> <span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span>
-        <span class="p">(</span><span class="s2">&quot;Train&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)),</span>
-        <span class="p">(</span><span class="s2">&quot;Test&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span>
-    <span class="p">]:</span>
-        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-        <span class="n">mae</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
-        <span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
-        <span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mse</span><span class="p">)</span>
-        <span class="n">mape</span> <span class="o">=</span> <span class="n">mean_absolute_percentage_error</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
-        <span class="n">results</span><span class="p">[(</span><span class="n">name</span><span class="p">,</span> <span class="n">split</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[</span><span class="n">mae</span><span class="p">,</span> <span class="n">mse</span><span class="p">,</span> <span class="n">rmse</span><span class="p">,</span> <span class="n">mape</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">results</span>
-
-<span class="c1">#BDS Test</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">bds_test</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
-    <span class="n">residuals</span> <span class="o">=</span> <span class="n">y_true</span> <span class="o">-</span> <span class="n">y_pred</span>
-    <span class="n">bds_result</span> <span class="o">=</span> <span class="n">BDS</span><span class="p">(</span><span class="n">residuals</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">bds_result</span><span class="o">.</span><span class="n">stat</span><span class="p">,</span> <span class="n">bds_result</span><span class="o">.</span><span class="n">pvalue</span>
-
-<span class="c1">#Gráfico Real vs Predicho</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">plot_predictions</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-    <span class="n">max_val</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">y_true</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">y_pred</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
-    <span class="n">min_val</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">y_true</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">y_pred</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">min_val</span><span class="p">,</span> <span class="n">max_val</span><span class="p">],</span> <span class="p">[</span><span class="n">min_val</span><span class="p">,</span> <span class="n">max_val</span><span class="p">],</span> <span class="s1">&#39;r--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Perfect Fit&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Real&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Predicho&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">regression_metrics</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+    <span class="n">y_true_exp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expm1</span><span class="p">(</span><span class="n">y_true</span><span class="p">)</span>
+    <span class="n">y_pred_exp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expm1</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
+    <span class="n">mae</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_true_exp</span><span class="p">,</span> <span class="n">y_pred_exp</span><span class="p">)</span>
+    <span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_true_exp</span><span class="p">,</span> <span class="n">y_pred_exp</span><span class="p">)</span>
+    <span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mse</span><span class="p">)</span>
+    <span class="n">mape</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">y_true_exp</span> <span class="o">-</span> <span class="n">y_pred_exp</span><span class="p">)</span> <span class="o">/</span> <span class="n">y_true_exp</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="k">return</span> <span class="n">mae</span><span class="p">,</span> <span class="n">mse</span><span class="p">,</span> <span class="n">rmse</span><span class="p">,</span> <span class="n">mape</span>
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="loop-para-evaluar-modelos-graficas-bds">
-<h2>8. Loop para evaluar modelos + gráficas + BDS<a class="headerlink" href="#loop-para-evaluar-modelos-graficas-bds" title="Link to this heading">#</a></h2>
+<section id="loop-para-evaluar-modelos-graficas-bds-resultados-en-log">
+<h2>8. Loop para evaluar modelos + gráficas + BDS - resultados en Log<a class="headerlink" href="#loop-para-evaluar-modelos-graficas-bds-resultados-en-log" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p>Iteramos por cada modelo entrenado.</p></li>
-<li><p>Guardamos sus métricas en Train/Val/Test.</p></li>
+<li><p>Guardamos sus métricas en Train/Test.</p></li>
 <li><p>Aplicamos el BDS Test en el conjunto de Test (para independencia de residuos).</p></li>
 <li><p>Generamos gráficos comparativos (Real vs Predicho) en cada conjunto.</p></li>
 </ol>
 <p>Aquí ocurre la evaluación central.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">mean_absolute_error</span><span class="p">,</span> <span class="n">r2_score</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tsa.stattools</span><span class="w"> </span><span class="kn">import</span> <span class="n">bds</span>
 
-<span class="c1"># ----------------------------</span>
-<span class="c1"># Función para ejecutar el BDS Test usando statsmodels</span>
-<span class="c1"># ----------------------------</span>
+<span class="c1"># 1. Funciones auxiliares</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">evaluate_model</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calcula métricas de desempeño para un modelo de regresión.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Predicciones</span>
+    <span class="n">y_train_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+    <span class="n">y_test_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+    
+    <span class="c1"># Métricas en Train</span>
+    <span class="n">train_rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_train_pred</span><span class="p">))</span>
+    <span class="n">train_mae</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_train_pred</span><span class="p">)</span>
+    
+    <span class="c1"># Métricas en Test</span>
+    <span class="n">test_rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_test_pred</span><span class="p">))</span>
+    <span class="n">test_mae</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_test_pred</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;Modelo&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+        <span class="s2">&quot;Train_RMSE&quot;</span><span class="p">:</span> <span class="n">train_rmse</span><span class="p">,</span>
+        <span class="s2">&quot;Train_MAE&quot;</span><span class="p">:</span> <span class="n">train_mae</span><span class="p">,</span>
+        <span class="s2">&quot;Test_RMSE&quot;</span><span class="p">:</span> <span class="n">test_rmse</span><span class="p">,</span>
+        <span class="s2">&quot;Test_MAE&quot;</span><span class="p">:</span> <span class="n">test_mae</span><span class="p">,</span>
+    <span class="p">}</span>
+
 <span class="k">def</span><span class="w"> </span><span class="nf">bds_test</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">max_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="mf">1.5</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Aplica el test BDS (Brock-Dechert-Scheinkman) a los residuos del modelo usando statsmodels.</span>
-
-<span class="sd">    Parámetros:</span>
-<span class="sd">        y_true (array-like): Valores reales.</span>
-<span class="sd">        y_pred (array-like): Predicciones.</span>
-<span class="sd">        max_dim (int): Dimensión máxima de embedding (por defecto 2).</span>
-<span class="sd">        epsilon (float|None): Umbral de distancia; si es None, se calcula automáticamente.</span>
-<span class="sd">        distance (float): Multiplicador para calcular epsilon si este es None.</span>
-
-<span class="sd">    Retorna:</span>
-<span class="sd">        stat (float): Estadístico del test.</span>
-<span class="sd">        pvalue (float): Valor p.</span>
+<span class="sd">    Aplica el test BDS (Brock-Dechert-Scheinkman) a los residuos del modelo.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">residuals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_true</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
-    <span class="n">residuals</span> <span class="o">=</span> <span class="n">residuals</span><span class="p">[</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">residuals</span><span class="p">)]</span>  <span class="c1"># Elimina NaNs</span>
+    <span class="n">residuals</span> <span class="o">=</span> <span class="n">residuals</span><span class="p">[</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">residuals</span><span class="p">)]</span>  <span class="c1"># elimina NaNs</span>
     
     <span class="n">stat</span><span class="p">,</span> <span class="n">pvalue</span> <span class="o">=</span> <span class="n">bds</span><span class="p">(</span><span class="n">residuals</span><span class="p">,</span> <span class="n">max_dim</span><span class="o">=</span><span class="n">max_dim</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="n">epsilon</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="n">distance</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">stat</span><span class="p">,</span> <span class="n">pvalue</span>
 
-<span class="c1"># ----------------------------</span>
-<span class="c1"># Diccionarios para almacenar resultados</span>
-<span class="c1"># ----------------------------</span>
-<span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_predictions</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Gráfico de comparación entre valores reales y predichos.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">y_true</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">y_true</span><span class="o">.</span><span class="n">max</span><span class="p">()],</span>
+             <span class="p">[</span><span class="n">y_true</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">y_true</span><span class="o">.</span><span class="n">max</span><span class="p">()],</span>
+             <span class="s1">&#39;r--&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Valores reales&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Predicciones&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># 2. Diccionarios para resultados</span>
+<span class="n">results_list</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">bds_results</span> <span class="o">=</span> <span class="p">{}</span>
 
-<span class="c1"># ----------------------------</span>
-<span class="c1"># Loop sobre modelos</span>
-<span class="c1"># ----------------------------</span>
+<span class="c1"># 3. Loop sobre modelos</span>
 <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">search</span> <span class="ow">in</span> <span class="p">[</span>
     <span class="p">(</span><span class="s2">&quot;Ridge&quot;</span><span class="p">,</span> <span class="n">ridge_search</span><span class="p">),</span>
     <span class="p">(</span><span class="s2">&quot;Lasso&quot;</span><span class="p">,</span> <span class="n">lasso_search</span><span class="p">),</span>
@@ -1647,7 +1620,7 @@ Name: count, dtype: int64
     <span class="c1"># Métricas del modelo</span>
     <span class="n">metrics</span> <span class="o">=</span> <span class="n">evaluate_model</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">best_model</span><span class="p">,</span> <span class="n">X_train_reg</span><span class="p">,</span> <span class="n">X_test_reg</span><span class="p">,</span>
                               <span class="n">y_train_reg</span><span class="p">,</span> <span class="n">y_test_reg</span><span class="p">)</span>
-    <span class="n">results</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span>
+    <span class="n">results_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span>
     
     <span class="c1"># Test BDS en TEST</span>
     <span class="n">y_test_pred</span> <span class="o">=</span> <span class="n">best_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_reg</span><span class="p">)</span>
@@ -1658,21 +1631,36 @@ Name: count, dtype: int64
     <span class="n">plot_predictions</span><span class="p">(</span><span class="n">y_train_reg</span><span class="p">,</span> <span class="n">best_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train_reg</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> – Train&quot;</span><span class="p">)</span>
     <span class="n">plot_predictions</span><span class="p">(</span><span class="n">y_test_reg</span><span class="p">,</span> <span class="n">y_test_pred</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> – Test&quot;</span><span class="p">)</span>
 
-<span class="c1"># ----------------------------</span>
-<span class="c1"># Crear DataFrame con resultados BDS</span>
-<span class="c1"># ----------------------------</span>
+<span class="c1"># 4. DataFrames con resultados</span>
+<span class="c1"># Métricas</span>
+<span class="n">metrics_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results_list</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;Modelo&quot;</span><span class="p">)</span>
+
+<span class="c1"># BDS Test</span>
 <span class="n">bds_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">bds_results</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;BDS_Stat&quot;</span><span class="p">,</span> <span class="s2">&quot;p_value&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
 <span class="n">bds_df</span><span class="p">[</span><span class="s2">&quot;Interpretación&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
     <span class="n">bds_df</span><span class="p">[</span><span class="s2">&quot;p_value&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.05</span><span class="p">,</span>
     <span class="s2">&quot;Residuos independientes (i.i.d.)&quot;</span><span class="p">,</span>
     <span class="s2">&quot;Dependencia no lineal&quot;</span>
 <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Resultados de Métricas:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">metrics_df</span><span class="p">)</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Resultados del Test BDS:&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">bds_df</span><span class="p">)</span>
 
-<span class="c1"># ----------------------------</span>
-<span class="c1"># Gráfico comparativo de p-values</span>
-<span class="c1"># ----------------------------</span>
+<span class="c1"># 5. Gráficos comparativos</span>
+
+<span class="c1"># RMSE</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">metrics_df</span><span class="p">[</span><span class="s2">&quot;Test_RMSE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;skyblue&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Comparación de Test RMSE por Modelo&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;RMSE&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="c1"># BDS p-values</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">bds_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">bds_df</span><span class="p">[</span><span class="s2">&quot;p_value&quot;</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;α = 0.05&quot;</span><span class="p">)</span>
@@ -1685,32 +1673,43 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f90019f0d615ee59362ceac366115c3cc5772191b44c024ab673369cc8406293.png" src="_images/f90019f0d615ee59362ceac366115c3cc5772191b44c024ab673369cc8406293.png" />
-<img alt="_images/2ca0eaecc1be0ea357f9b9c03ba1f5d67bed1c70761d0d8a12e87af528a524c1.png" src="_images/2ca0eaecc1be0ea357f9b9c03ba1f5d67bed1c70761d0d8a12e87af528a524c1.png" />
-<img alt="_images/abdcdd2a08aa60b9f8ddd26754efd2018e846f65d8faeb4100eb0cb2390ba05e.png" src="_images/abdcdd2a08aa60b9f8ddd26754efd2018e846f65d8faeb4100eb0cb2390ba05e.png" />
-<img alt="_images/4b35ccc2c160e20f5c369fad5d4415f0a3e271f40d54a749acae38c1093b946d.png" src="_images/4b35ccc2c160e20f5c369fad5d4415f0a3e271f40d54a749acae38c1093b946d.png" />
-<img alt="_images/c11ea468cdb81353dc83588c6dc107c4dd821d46b87f2c053d50d8f5b5b213e2.png" src="_images/c11ea468cdb81353dc83588c6dc107c4dd821d46b87f2c053d50d8f5b5b213e2.png" />
-<img alt="_images/98c4e1f43a4bc5adb803265f051f0b38098267ce5c986c20617135fa3104b3df.png" src="_images/98c4e1f43a4bc5adb803265f051f0b38098267ce5c986c20617135fa3104b3df.png" />
-<img alt="_images/b4a454a85cc3820b72f22844e28fb9f24378e9f239b2e83439bb8bfd700ef29c.png" src="_images/b4a454a85cc3820b72f22844e28fb9f24378e9f239b2e83439bb8bfd700ef29c.png" />
-<img alt="_images/4fa09669124982766dbc2b9a7ef67e2ffd5540705056922d0db7d43c86811e2c.png" src="_images/4fa09669124982766dbc2b9a7ef67e2ffd5540705056922d0db7d43c86811e2c.png" />
-<img alt="_images/8019c995fd64e19ce0e23d216344371c81cbb949b36fb2705d01053bcb550efb.png" src="_images/8019c995fd64e19ce0e23d216344371c81cbb949b36fb2705d01053bcb550efb.png" />
-<img alt="_images/e755bbff815496bd42dd0742a4362430201dacc9c1214f866dc03eb196929502.png" src="_images/e755bbff815496bd42dd0742a4362430201dacc9c1214f866dc03eb196929502.png" />
-<img alt="_images/8cf1801aa43070ba4ca7cc21be520d0b80ed14880b808235ab34c38affeda6f5.png" src="_images/8cf1801aa43070ba4ca7cc21be520d0b80ed14880b808235ab34c38affeda6f5.png" />
-<img alt="_images/77739006f3b251739861b6375538e5aac7be8b12b6d690531fd4492ebd00fb1c.png" src="_images/77739006f3b251739861b6375538e5aac7be8b12b6d690531fd4492ebd00fb1c.png" />
-<img alt="_images/ea34b5b20efa25e18b73acad74fc6a6ed65c6aa9a791dd6ba5b9bc60c3764a6b.png" src="_images/ea34b5b20efa25e18b73acad74fc6a6ed65c6aa9a791dd6ba5b9bc60c3764a6b.png" />
-<img alt="_images/a7e6536989f5edc2bd85e58bcd880e176bb8cc7767a7f6925b5e4c523ea7aca7.png" src="_images/a7e6536989f5edc2bd85e58bcd880e176bb8cc7767a7f6925b5e4c523ea7aca7.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Resultados del Test BDS:
-                          BDS_Stat                 p_value  \
-Ridge           3.5657840740128517  0.00036276997026370915   
-Lasso           -1.360849514752762     0.17356125057356198   
-KNN             1.5768927979328395     0.11482019399817797   
-DecisionTree  -0.29914141931648647      0.7648321443146662   
-SVR           -0.22392850855768537      0.8228129323318437   
-XGB            -0.2229877786135616      0.8235450183012233   
-MLP             1.1086056336167411     0.26760034675194366   
+<img alt="_images/c0e348121c775bd3ccd4dcb374f82537d5857071cc69566473ead992e53c1ab4.png" src="_images/c0e348121c775bd3ccd4dcb374f82537d5857071cc69566473ead992e53c1ab4.png" />
+<img alt="_images/d71ba8bbb669a230b57cbb002ec61322758cb6faa0d44156c497fef3ed376cc3.png" src="_images/d71ba8bbb669a230b57cbb002ec61322758cb6faa0d44156c497fef3ed376cc3.png" />
+<img alt="_images/e9d88d4ce148a9853a2e5941ce399cf924405281c891194dfcb2d564a37a4d5a.png" src="_images/e9d88d4ce148a9853a2e5941ce399cf924405281c891194dfcb2d564a37a4d5a.png" />
+<img alt="_images/635241102e4ef7338c1e27de0f4f566ed689769fcce1e23eef307fb04c6545fe.png" src="_images/635241102e4ef7338c1e27de0f4f566ed689769fcce1e23eef307fb04c6545fe.png" />
+<img alt="_images/13d094a60c8d8cd351441bc32d96889aac593d811a3dc0a8dcafe2d7d0c8d28b.png" src="_images/13d094a60c8d8cd351441bc32d96889aac593d811a3dc0a8dcafe2d7d0c8d28b.png" />
+<img alt="_images/6132ef76ede4da86f02830e4a3193089e33547b010253307db6c80d0a76dc7e9.png" src="_images/6132ef76ede4da86f02830e4a3193089e33547b010253307db6c80d0a76dc7e9.png" />
+<img alt="_images/96587e5d5ae6e3f3142978b28c4b5ab27916adda8504c4a4b996081293081d3c.png" src="_images/96587e5d5ae6e3f3142978b28c4b5ab27916adda8504c4a4b996081293081d3c.png" />
+<img alt="_images/d0e212ae336049499a3b4fab3550145d2dbecfd3c998c2178a4d0826815f9c45.png" src="_images/d0e212ae336049499a3b4fab3550145d2dbecfd3c998c2178a4d0826815f9c45.png" />
+<img alt="_images/1ceccfa1dfa1f95f533c5e164cff488c2eae1880565d73308dd56682a4e10172.png" src="_images/1ceccfa1dfa1f95f533c5e164cff488c2eae1880565d73308dd56682a4e10172.png" />
+<img alt="_images/e9d71fe04c543980953eb3b178ceb294d639a18d2cf2540a83607fc35687f95b.png" src="_images/e9d71fe04c543980953eb3b178ceb294d639a18d2cf2540a83607fc35687f95b.png" />
+<img alt="_images/dd9aa4a215fabecca06c3092eadd93cda140a2d2fe80c654852c2073797f379e.png" src="_images/dd9aa4a215fabecca06c3092eadd93cda140a2d2fe80c654852c2073797f379e.png" />
+<img alt="_images/bf218e036980008cc877226aae7adb7a6da29705816dad42e060553eab603378.png" src="_images/bf218e036980008cc877226aae7adb7a6da29705816dad42e060553eab603378.png" />
+<img alt="_images/0a14bd810e2ce67e7776365fa5f649fc890de8ffb653f4564a0f1147f8a06c07.png" src="_images/0a14bd810e2ce67e7776365fa5f649fc890de8ffb653f4564a0f1147f8a06c07.png" />
+<img alt="_images/7219b82c1ea7c557854eb718ddfd97646fbeb2fab494d0183129326155e89233.png" src="_images/7219b82c1ea7c557854eb718ddfd97646fbeb2fab494d0183129326155e89233.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Resultados de Métricas:
+              Train_RMSE  Train_MAE  Test_RMSE  Test_MAE
+Modelo                                                  
+Ridge           0.141021   0.092551   0.142868  0.093703
+Lasso           0.166155   0.107303   0.168214  0.108237
+KNN             0.048161   0.013596   0.073948  0.022855
+DecisionTree    0.311508   0.234666   0.311336  0.235288
+SVR             0.063990   0.056993   0.065309  0.057945
+XGB             0.007614   0.002751   0.010102  0.002975
+MLP             0.007527   0.002959   0.007668  0.002975
+
+Resultados del Test BDS:
+                          BDS_Stat              p_value  \
+Ridge         -0.10115855494665842   0.9194245962556316   
+Lasso          0.23104875586978652   0.8172769248763921   
+KNN              1.503958333708344   0.1325920954596185   
+DecisionTree   0.25660947286034963   0.7974802615417469   
+SVR            -1.1604170708863144   0.2458790397788978   
+XGB             1.2679485187905826  0.20481633576720304   
+MLP             1.8811272542201425  0.05995461038454407   
 
                                 Interpretación  
-Ridge                    Dependencia no lineal  
+Ridge         Residuos independientes (i.i.d.)  
 Lasso         Residuos independientes (i.i.d.)  
 KNN           Residuos independientes (i.i.d.)  
 DecisionTree  Residuos independientes (i.i.d.)  
@@ -1719,97 +1718,84 @@ XGB           Residuos independientes (i.i.d.)
 MLP           Residuos independientes (i.i.d.)  
 </pre></div>
 </div>
-<img alt="_images/f96598a4c991735ae03e10294f6af6014afdd3b630960171114a0db6e2e280f5.png" src="_images/f96598a4c991735ae03e10294f6af6014afdd3b630960171114a0db6e2e280f5.png" />
+<img alt="_images/8efd194172c2590b4f14bbee998428d6dd1997110b2a0d374483b82d6302527e.png" src="_images/8efd194172c2590b4f14bbee998428d6dd1997110b2a0d374483b82d6302527e.png" />
+<img alt="_images/217f9bc66fbcc7da12e7cd363e44bf4c323dce59876a5e72bf7c4ede294374c7.png" src="_images/217f9bc66fbcc7da12e7cd363e44bf4c323dce59876a5e72bf7c4ede294374c7.png" />
 </div>
 </div>
-<p><strong>Ridge</strong>
-p-value = 0.00036 (muy bajo) → rechazamos H₀ de independencia de residuos → hay dependencia no lineal.
-Significa que la relación lineal no captura toda la estructura.</p>
-<p><strong>Lasso</strong>
-p-value = 0.17 (alto) → no rechazamos H₀ → residuos parecen independientes (bueno).
-Esto indica que Lasso se ajustó bien con las variables disponibles.</p>
-<p><strong>DecisionTree</strong>
-p-value = 0.76 (muy alto) → residuos parecen aleatorios (bueno).
-Pero esto no significa que no haya sobreajuste: solo indica que el árbol capturó casi toda la estructura del Train (y probablemente sobreajustó).</p>
 </section>
-<section id="dataframe-de-resultados-y-grafico-comparativo">
-<h2>9. DataFrame de resultados y gráfico comparativo<a class="headerlink" href="#dataframe-de-resultados-y-grafico-comparativo" title="Link to this heading">#</a></h2>
+<section id="dataframe-de-resultados-y-grafico-comparativo-salario-en-usd">
+<h2>9. DataFrame de resultados y gráfico comparativo - Salario en USD<a class="headerlink" href="#dataframe-de-resultados-y-grafico-comparativo-salario-en-usd" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p>Construimos un DataFrame con todas las métricas por modelo y dataset.</p></li>
 <li><p>Mostramos resultados del BDS Test.</p></li>
-<li><p>Hacemos un gráfico de barras comparativo de RMSE (Test) entre modelos.</p></li>
 </ol>
 <p>Con esto tenemos un resumen visual y tabular para comparar rendimientos.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
-    <span class="p">{</span><span class="s2">&quot;Modelo&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s2">&quot;Dataset&quot;</span><span class="p">:</span> <span class="n">split</span><span class="p">,</span> <span class="s2">&quot;MAE&quot;</span><span class="p">:</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;MSE&quot;</span><span class="p">:</span> <span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;RMSE&quot;</span><span class="p">:</span> <span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="s2">&quot;MAPE (%)&quot;</span><span class="p">:</span> <span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">]}</span>
-    <span class="k">for</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">split</span><span class="p">),</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-<span class="p">])</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== Resultados BDS (Test) ===&quot;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">model</span><span class="p">,</span> <span class="p">(</span><span class="n">stat</span><span class="p">,</span> <span class="n">pval</span><span class="p">)</span> <span class="ow">in</span> <span class="n">bds_results</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model</span><span class="si">}</span><span class="s2">: BDS Stat=</span><span class="si">{</span><span class="n">stat</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, p-value=</span><span class="si">{</span><span class="n">pval</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="c1"># Filtrar solo Test</span>
-<span class="n">df_test</span> <span class="o">=</span> <span class="n">df_results</span><span class="p">[</span><span class="n">df_results</span><span class="p">[</span><span class="s2">&quot;Dataset&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Test&quot;</span><span class="p">]</span>
-
-<span class="c1"># Gráfico comparativo RMSE (Test)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">df_test</span><span class="p">[</span><span class="s2">&quot;Modelo&quot;</span><span class="p">],</span> <span class="n">df_test</span><span class="p">[</span><span class="s2">&quot;RMSE&quot;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;skyblue&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Comparación de RMSE (Test)&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;RMSE&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== Resultados BDS (Test) ===
-Ridge: BDS Stat=3.566, p-value=0.000
-Lasso: BDS Stat=-1.361, p-value=0.174
-KNN: BDS Stat=1.577, p-value=0.115
-DecisionTree: BDS Stat=-0.299, p-value=0.765
-SVR: BDS Stat=-0.224, p-value=0.823
-XGB: BDS Stat=-0.223, p-value=0.824
-MLP: BDS Stat=1.109, p-value=0.268
-</pre></div>
-</div>
-<img alt="_images/8357518e65d10851e246b74fc731d33ccb9795d82f1d168196cace60ef344ef5.png" src="_images/8357518e65d10851e246b74fc731d33ccb9795d82f1d168196cace60ef344ef5.png" />
-</div>
-</div>
-<p><strong>Ridge y Lasso:</strong> RMSE muy bajo → modelos lineales están funcionando extremadamente bien.</p>
-<p><strong>DecisionTree:</strong> también bajo, aunque ligeramente mayor que Ridge y Lasso.</p>
-<p><strong>KNN:</strong> RMSE altísimo → completamente inadecuado para este problema (descartarlo).</p>
-<p><strong>SVR, XGB, MLP:</strong> errores enormes comparados con Ridge y Lasso.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_absolute_error</span><span class="p">,</span> <span class="n">mean_squared_error</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">expm1</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tsa.stattools</span><span class="w"> </span><span class="kn">import</span> <span class="n">bds</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">mean_absolute_error</span>
 
-
-<span class="c1"># Función para métricas de regresión</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">regression_metrics</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+<span class="c1"># ----------------------------</span>
+<span class="c1"># Función de evaluación</span>
+<span class="c1"># ----------------------------</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">evaluate_model</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">log_target</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Calcula métricas de regresión: MAE, MSE, RMSE, MAPE.</span>
+<span class="sd">    Calcula métricas de desempeño para un modelo de regresión.</span>
+<span class="sd">    Si log_target=True, invierte la transformación logarítmica con expm1.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_true</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
-    <span class="n">mae</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
-    <span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
-    <span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mse</span><span class="p">)</span>
-    <span class="n">mape</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">y_true</span> <span class="o">-</span> <span class="n">y_pred</span><span class="p">)</span> <span class="o">/</span> <span class="n">y_true</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
-    <span class="k">return</span> <span class="n">mae</span><span class="p">,</span> <span class="n">mse</span><span class="p">,</span> <span class="n">rmse</span><span class="p">,</span> <span class="n">mape</span>
+    <span class="c1"># Predicciones</span>
+    <span class="n">y_train_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+    <span class="n">y_test_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
 
+    <span class="k">if</span> <span class="n">log_target</span><span class="p">:</span>
+        <span class="n">y_train_pred</span> <span class="o">=</span> <span class="n">expm1</span><span class="p">(</span><span class="n">y_train_pred</span><span class="p">)</span>
+        <span class="n">y_test_pred</span> <span class="o">=</span> <span class="n">expm1</span><span class="p">(</span><span class="n">y_test_pred</span><span class="p">)</span>
+        <span class="n">y_train</span> <span class="o">=</span> <span class="n">expm1</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span>
+        <span class="n">y_test</span> <span class="o">=</span> <span class="n">expm1</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span>
 
-<span class="c1"># Inicializar lista de resultados</span>
+    <span class="c1"># Métricas en Train</span>
+    <span class="n">train_rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_train_pred</span><span class="p">))</span>
+    <span class="n">train_mae</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_train_pred</span><span class="p">)</span>
+    <span class="n">train_mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_train_pred</span><span class="p">)</span>
+    <span class="n">train_mape</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">y_train</span> <span class="o">-</span> <span class="n">y_train_pred</span><span class="p">)</span> <span class="o">/</span> <span class="n">y_train</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
 
-<span class="n">results_table</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># Métricas en Test</span>
+    <span class="n">test_rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_test_pred</span><span class="p">))</span>
+    <span class="n">test_mae</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_test_pred</span><span class="p">)</span>
+    <span class="n">test_mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_test_pred</span><span class="p">)</span>
+    <span class="n">test_mape</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">y_test</span> <span class="o">-</span> <span class="n">y_test_pred</span><span class="p">)</span> <span class="o">/</span> <span class="n">y_test</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
 
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;Modelo&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+        <span class="s2">&quot;Train_RMSE&quot;</span><span class="p">:</span> <span class="n">train_rmse</span><span class="p">,</span>
+        <span class="s2">&quot;Train_MAE&quot;</span><span class="p">:</span> <span class="n">train_mae</span><span class="p">,</span>
+        <span class="s2">&quot;Train_MSE&quot;</span><span class="p">:</span> <span class="n">train_mse</span><span class="p">,</span>
+        <span class="s2">&quot;Train_MAPE&quot;</span><span class="p">:</span> <span class="n">train_mape</span><span class="p">,</span>
+        <span class="s2">&quot;Test_RMSE&quot;</span><span class="p">:</span> <span class="n">test_rmse</span><span class="p">,</span>
+        <span class="s2">&quot;Test_MAE&quot;</span><span class="p">:</span> <span class="n">test_mae</span><span class="p">,</span>
+        <span class="s2">&quot;Test_MSE&quot;</span><span class="p">:</span> <span class="n">test_mse</span><span class="p">,</span>
+        <span class="s2">&quot;Test_MAPE&quot;</span><span class="p">:</span> <span class="n">test_mape</span>
+    <span class="p">}</span>
 
-<span class="c1"># Loop sobre modelos</span>
+<span class="c1"># Test BDS</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">bds_test</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">log_target</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">max_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="mf">1.5</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Aplica el test BDS a los residuos del modelo.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">log_target</span><span class="p">:</span>
+        <span class="n">y_true</span> <span class="o">=</span> <span class="n">expm1</span><span class="p">(</span><span class="n">y_true</span><span class="p">)</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">expm1</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
+
+    <span class="n">residuals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_true</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
+    <span class="n">residuals</span> <span class="o">=</span> <span class="n">residuals</span><span class="p">[</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">residuals</span><span class="p">)]</span>
+    
+    <span class="n">stat</span><span class="p">,</span> <span class="n">pvalue</span> <span class="o">=</span> <span class="n">bds</span><span class="p">(</span><span class="n">residuals</span><span class="p">,</span> <span class="n">max_dim</span><span class="o">=</span><span class="n">max_dim</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="n">epsilon</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="n">distance</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">stat</span><span class="p">,</span> <span class="n">pvalue</span>
+
+<span class="n">results_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">bds_results</span> <span class="o">=</span> <span class="p">{}</span>
 
 <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">search</span> <span class="ow">in</span> <span class="p">[</span>
     <span class="p">(</span><span class="s2">&quot;Ridge&quot;</span><span class="p">,</span> <span class="n">ridge_search</span><span class="p">),</span>
@@ -1821,277 +1807,349 @@ MLP: BDS Stat=1.109, p-value=0.268
     <span class="p">(</span><span class="s2">&quot;MLP&quot;</span><span class="p">,</span> <span class="n">mlp_search</span><span class="p">)</span>
 <span class="p">]:</span>
     <span class="n">best_model</span> <span class="o">=</span> <span class="n">search</span><span class="o">.</span><span class="n">best_estimator_</span>
-    
-    <span class="c1"># Predicciones</span>
-    <span class="n">y_train_pred</span> <span class="o">=</span> <span class="n">best_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train_reg</span><span class="p">)</span>
+
+    <span class="c1"># Evaluación</span>
+    <span class="n">metrics</span> <span class="o">=</span> <span class="n">evaluate_model</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">best_model</span><span class="p">,</span> <span class="n">X_train_reg</span><span class="p">,</span> <span class="n">X_test_reg</span><span class="p">,</span> <span class="n">y_train_reg</span><span class="p">,</span> <span class="n">y_test_reg</span><span class="p">)</span>
+    <span class="n">results_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span>
+
+    <span class="c1"># BDS test</span>
     <span class="n">y_test_pred</span> <span class="o">=</span> <span class="n">best_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_reg</span><span class="p">)</span>
-    
-    <span class="c1"># Métricas</span>
-    <span class="n">train_metrics</span> <span class="o">=</span> <span class="n">regression_metrics</span><span class="p">(</span><span class="n">y_train_reg</span><span class="p">,</span> <span class="n">y_train_pred</span><span class="p">)</span>
-    <span class="n">test_metrics</span>  <span class="o">=</span> <span class="n">regression_metrics</span><span class="p">(</span><span class="n">y_test_reg</span><span class="p">,</span> <span class="n">y_test_pred</span><span class="p">)</span>
-    
-    <span class="c1"># Test BDS sobre residuos</span>
-    <span class="n">residuals</span> <span class="o">=</span> <span class="n">y_test_reg</span> <span class="o">-</span> <span class="n">y_test_pred</span>
-    <span class="n">bds_result</span> <span class="o">=</span> <span class="n">bds</span><span class="p">(</span><span class="n">residuals</span><span class="p">,</span> <span class="n">max_dim</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
-    <span class="n">bds_pvalues</span> <span class="o">=</span> <span class="n">bds_result</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># array de p-valores dim 2–6</span>
-    
-    <span class="c1"># Guardar resultados</span>
-    <span class="n">results_table</span><span class="o">.</span><span class="n">append</span><span class="p">([</span>
-        <span class="n">name</span><span class="p">,</span>
-        <span class="o">*</span><span class="n">train_metrics</span><span class="p">,</span>
-        <span class="o">*</span><span class="n">test_metrics</span><span class="p">,</span>
-        <span class="o">*</span><span class="n">bds_pvalues</span>
-    <span class="p">])</span>
+    <span class="n">stat</span><span class="p">,</span> <span class="n">pvalue</span> <span class="o">=</span> <span class="n">bds_test</span><span class="p">(</span><span class="n">y_test_reg</span><span class="p">,</span> <span class="n">y_test_pred</span><span class="p">)</span>
+    <span class="n">bds_results</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">stat</span><span class="p">,</span> <span class="n">pvalue</span><span class="p">)</span>
 
 
-<span class="n">columns</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_tuples</span><span class="p">([</span>
-    <span class="p">(</span><span class="s2">&quot;Modelo&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s2">&quot;Train&quot;</span><span class="p">,</span> <span class="s2">&quot;MAE&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;Train&quot;</span><span class="p">,</span> <span class="s2">&quot;MSE&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;Train&quot;</span><span class="p">,</span> <span class="s2">&quot;RMSE&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;Train&quot;</span><span class="p">,</span> <span class="s2">&quot;MAPE&quot;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s2">&quot;Test&quot;</span><span class="p">,</span> <span class="s2">&quot;MAE&quot;</span><span class="p">),</span>  <span class="p">(</span><span class="s2">&quot;Test&quot;</span><span class="p">,</span> <span class="s2">&quot;MSE&quot;</span><span class="p">),</span>  <span class="p">(</span><span class="s2">&quot;Test&quot;</span><span class="p">,</span> <span class="s2">&quot;RMSE&quot;</span><span class="p">),</span>  <span class="p">(</span><span class="s2">&quot;Test&quot;</span><span class="p">,</span> <span class="s2">&quot;MAPE&quot;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s2">&quot;BDS p-value&quot;</span><span class="p">,</span> <span class="s2">&quot;dim2&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;BDS p-value&quot;</span><span class="p">,</span> <span class="s2">&quot;dim3&quot;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s2">&quot;BDS p-value&quot;</span><span class="p">,</span> <span class="s2">&quot;dim4&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;BDS p-value&quot;</span><span class="p">,</span> <span class="s2">&quot;dim5&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;BDS p-value&quot;</span><span class="p">,</span> <span class="s2">&quot;dim6&quot;</span><span class="p">)</span>
-<span class="p">])</span>
+<span class="c1"># DataFrame de resultados</span>
 
+<span class="n">results_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results_list</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;Modelo&quot;</span><span class="p">)</span>
 
-<span class="n">results_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results_table</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
-
-<span class="c1"># Ordenar columnas para evitar UnsortedIndexError</span>
-<span class="n">results_df</span> <span class="o">=</span> <span class="n">results_df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">highlight_best</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;min&quot;</span><span class="p">):</span>
-    <span class="n">is_best</span> <span class="o">=</span> <span class="n">s</span> <span class="o">==</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="k">if</span> <span class="n">metric</span> <span class="o">==</span> <span class="s2">&quot;min&quot;</span> <span class="k">else</span> <span class="n">s</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
-    <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;background-color: #c6efce; color: #006100&#39;</span> <span class="k">if</span> <span class="n">v</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">is_best</span><span class="p">]</span>
-
-<span class="c1"># Columnas por bloque</span>
-<span class="n">train_cols</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;Train&quot;</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;MAE&quot;</span><span class="p">,</span> <span class="s2">&quot;MSE&quot;</span><span class="p">,</span> <span class="s2">&quot;RMSE&quot;</span><span class="p">,</span> <span class="s2">&quot;MAPE&quot;</span><span class="p">]]</span>
-<span class="n">test_cols</span>  <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;Test&quot;</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;MAE&quot;</span><span class="p">,</span> <span class="s2">&quot;MSE&quot;</span><span class="p">,</span> <span class="s2">&quot;RMSE&quot;</span><span class="p">,</span> <span class="s2">&quot;MAPE&quot;</span><span class="p">]]</span>
-
-<span class="n">styled_df</span> <span class="o">=</span> <span class="p">(</span><span class="n">results_df</span><span class="o">.</span><span class="n">style</span>
-    <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">highlight_best</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="n">train_cols</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;min&quot;</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">highlight_best</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="n">test_cols</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;min&quot;</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="n">train_cols</span> <span class="o">+</span> <span class="n">test_cols</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">set_table_styles</span><span class="p">([</span>
-        <span class="p">{</span><span class="s1">&#39;selector&#39;</span><span class="p">:</span> <span class="s1">&#39;th&#39;</span><span class="p">,</span> <span class="s1">&#39;props&#39;</span><span class="p">:</span> <span class="p">[(</span><span class="s1">&#39;font-size&#39;</span><span class="p">,</span> <span class="s1">&#39;11pt&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;text-align&#39;</span><span class="p">,</span> <span class="s1">&#39;center&#39;</span><span class="p">)]},</span>
-        <span class="p">{</span><span class="s1">&#39;selector&#39;</span><span class="p">:</span> <span class="s1">&#39;td&#39;</span><span class="p">,</span> <span class="s1">&#39;props&#39;</span><span class="p">:</span> <span class="p">[(</span><span class="s1">&#39;text-align&#39;</span><span class="p">,</span> <span class="s1">&#39;center&#39;</span><span class="p">)]}</span>
-    <span class="p">])</span>
+<span class="c1"># Estilo de tabla</span>
+<span class="n">styled_results</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">results_df</span><span class="o">.</span><span class="n">style</span>
+    <span class="o">.</span><span class="n">background_gradient</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Reds&quot;</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Train_RMSE&quot;</span><span class="p">,</span> <span class="s2">&quot;Train_MAE&quot;</span><span class="p">,</span> <span class="s2">&quot;Train_MSE&quot;</span><span class="p">,</span> <span class="s2">&quot;Train_MAPE&quot;</span><span class="p">,</span>
+                                              <span class="s2">&quot;Test_RMSE&quot;</span><span class="p">,</span> <span class="s2">&quot;Test_MAE&quot;</span><span class="p">,</span> <span class="s2">&quot;Test_MSE&quot;</span><span class="p">,</span> <span class="s2">&quot;Test_MAPE&quot;</span><span class="p">])</span>
+    <span class="o">.</span><span class="n">format</span><span class="p">({</span>
+        <span class="s2">&quot;Train_RMSE&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{:,.0f}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Train_MAE&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{:,.0f}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Train_MSE&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{:,.0f}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Train_MAPE&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">%&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Test_RMSE&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{:,.0f}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Test_MAE&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{:,.0f}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Test_MSE&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{:,.0f}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Test_MAPE&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">%&quot;</span>
+    <span class="p">})</span>
+    <span class="o">.</span><span class="n">set_table_styles</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="p">{</span><span class="s2">&quot;selector&quot;</span><span class="p">:</span> <span class="s2">&quot;th&quot;</span><span class="p">,</span> <span class="s2">&quot;props&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;background-color&quot;</span><span class="p">,</span> <span class="s2">&quot;#b22222&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="s2">&quot;white&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;font-weight&quot;</span><span class="p">,</span> <span class="s2">&quot;bold&quot;</span><span class="p">)]},</span>
+            <span class="p">{</span><span class="s2">&quot;selector&quot;</span><span class="p">:</span> <span class="s2">&quot;caption&quot;</span><span class="p">,</span> <span class="s2">&quot;props&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;caption-side&quot;</span><span class="p">,</span> <span class="s2">&quot;top&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;font-size&quot;</span><span class="p">,</span> <span class="s2">&quot;16px&quot;</span><span class="p">)]}</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+    <span class="o">.</span><span class="n">set_caption</span><span class="p">(</span><span class="s2">&quot;Comparación de Modelos – Train vs Test (MSE, RMSE, MAE, MAPE en escala original USD)&quot;</span><span class="p">)</span>
 <span class="p">)</span>
 
-<span class="n">display</span><span class="p">(</span><span class="n">styled_df</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">styled_results</span><span class="p">)</span>
 
-<span class="c1"># Exportar a Excel</span>
-<span class="n">results_df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">col</span> <span class="k">if</span> <span class="n">c</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">else</span> <span class="n">col</span>
-    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">results_df</span><span class="o">.</span><span class="n">columns</span>
-<span class="p">]</span>
-
-<span class="n">results_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="s2">&quot;resultados_modelos.xlsx&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="c1"># Resultados del Test BDS</span>
+<span class="n">bds_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">bds_results</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;BDS_Stat&quot;</span><span class="p">,</span> <span class="s2">&quot;p_value&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+<span class="n">bds_df</span><span class="p">[</span><span class="s2">&quot;Interpretación&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+    <span class="n">bds_df</span><span class="p">[</span><span class="s2">&quot;p_value&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.05</span><span class="p">,</span>
+    <span class="s2">&quot;Residuos independientes (i.i.d.)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Dependencia no lineal&quot;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Resultados del Test BDS:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bds_df</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html"><style type="text/css">
-#T_c16e5 th {
-  font-size: 11pt;
-  text-align: center;
+#T_19ab2 th {
+  background-color: #b22222;
+  color: white;
+  font-weight: bold;
 }
-#T_c16e5 td {
-  text-align: center;
+#T_19ab2 caption {
+  caption-side: top;
+  font-size: 16px;
 }
-#T_c16e5_row1_col6, #T_c16e5_row1_col7, #T_c16e5_row1_col8, #T_c16e5_row1_col9, #T_c16e5_row3_col10, #T_c16e5_row3_col11, #T_c16e5_row3_col12, #T_c16e5_row3_col13 {
-  background-color: #c6efce;
-  color: #006100;
+#T_19ab2_row0_col0 {
+  background-color: #c1161b;
+  color: #f1f1f1;
+}
+#T_19ab2_row0_col1, #T_19ab2_row0_col5, #T_19ab2_row1_col3, #T_19ab2_row1_col7, #T_19ab2_row3_col4 {
+  background-color: #fb7252;
+  color: #f1f1f1;
+}
+#T_19ab2_row0_col2 {
+  background-color: #f03f2e;
+  color: #f1f1f1;
+}
+#T_19ab2_row0_col3 {
+  background-color: #fc8e6e;
+  color: #000000;
+}
+#T_19ab2_row0_col4 {
+  background-color: #bb141a;
+  color: #f1f1f1;
+}
+#T_19ab2_row0_col6 {
+  background-color: #e93529;
+  color: #f1f1f1;
+}
+#T_19ab2_row0_col7 {
+  background-color: #fc8d6d;
+  color: #f1f1f1;
+}
+#T_19ab2_row1_col0, #T_19ab2_row1_col2, #T_19ab2_row1_col4, #T_19ab2_row1_col6, #T_19ab2_row3_col1, #T_19ab2_row3_col3, #T_19ab2_row3_col5, #T_19ab2_row3_col7 {
+  background-color: #67000d;
+  color: #f1f1f1;
+}
+#T_19ab2_row1_col1 {
+  background-color: #f44f39;
+  color: #f1f1f1;
+}
+#T_19ab2_row1_col5 {
+  background-color: #f5523a;
+  color: #f1f1f1;
+}
+#T_19ab2_row2_col0 {
+  background-color: #ffeee7;
+  color: #000000;
+}
+#T_19ab2_row2_col1 {
+  background-color: #ffefe8;
+  color: #000000;
+}
+#T_19ab2_row2_col2, #T_19ab2_row5_col1, #T_19ab2_row5_col2, #T_19ab2_row5_col3, #T_19ab2_row5_col5, #T_19ab2_row5_col6, #T_19ab2_row5_col7, #T_19ab2_row6_col0, #T_19ab2_row6_col1, #T_19ab2_row6_col2, #T_19ab2_row6_col3, #T_19ab2_row6_col4, #T_19ab2_row6_col5, #T_19ab2_row6_col6, #T_19ab2_row6_col7 {
+  background-color: #fff5f0;
+  color: #000000;
+}
+#T_19ab2_row2_col3 {
+  background-color: #ffeee6;
+  color: #000000;
+}
+#T_19ab2_row2_col4 {
+  background-color: #fee9df;
+  color: #000000;
+}
+#T_19ab2_row2_col5 {
+  background-color: #feeae0;
+  color: #000000;
+}
+#T_19ab2_row2_col6 {
+  background-color: #fff4ef;
+  color: #000000;
+}
+#T_19ab2_row2_col7 {
+  background-color: #fee7dc;
+  color: #000000;
+}
+#T_19ab2_row3_col0 {
+  background-color: #fb7555;
+  color: #f1f1f1;
+}
+#T_19ab2_row3_col2 {
+  background-color: #fcc4ad;
+  color: #000000;
+}
+#T_19ab2_row3_col6 {
+  background-color: #fcc2aa;
+  color: #000000;
+}
+#T_19ab2_row4_col0 {
+  background-color: #fee7db;
+  color: #000000;
+}
+#T_19ab2_row4_col1 {
+  background-color: #fcbda4;
+  color: #000000;
+}
+#T_19ab2_row4_col2, #T_19ab2_row4_col6 {
+  background-color: #fff4ee;
+  color: #000000;
+}
+#T_19ab2_row4_col3, #T_19ab2_row4_col7 {
+  background-color: #fcc3ab;
+  color: #000000;
+}
+#T_19ab2_row4_col4 {
+  background-color: #fee6da;
+  color: #000000;
+}
+#T_19ab2_row4_col5 {
+  background-color: #fcbca2;
+  color: #000000;
+}
+#T_19ab2_row5_col0 {
+  background-color: #fff3ed;
+  color: #000000;
+}
+#T_19ab2_row5_col4 {
+  background-color: #fff2ec;
+  color: #000000;
 }
 </style>
-<table id="T_c16e5">
+<table id="T_19ab2">
+  <caption>Comparación de Modelos – Train vs Test (MSE, RMSE, MAE, MAPE en escala original USD)</caption>
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_c16e5_level0_col0" class="col_heading level0 col0" colspan="5">BDS p-value</th>
-      <th id="T_c16e5_level0_col5" class="col_heading level0 col5" >Modelo</th>
-      <th id="T_c16e5_level0_col6" class="col_heading level0 col6" colspan="4">Test</th>
-      <th id="T_c16e5_level0_col10" class="col_heading level0 col10" colspan="4">Train</th>
+      <th id="T_19ab2_level0_col0" class="col_heading level0 col0" >Train_RMSE</th>
+      <th id="T_19ab2_level0_col1" class="col_heading level0 col1" >Train_MAE</th>
+      <th id="T_19ab2_level0_col2" class="col_heading level0 col2" >Train_MSE</th>
+      <th id="T_19ab2_level0_col3" class="col_heading level0 col3" >Train_MAPE</th>
+      <th id="T_19ab2_level0_col4" class="col_heading level0 col4" >Test_RMSE</th>
+      <th id="T_19ab2_level0_col5" class="col_heading level0 col5" >Test_MAE</th>
+      <th id="T_19ab2_level0_col6" class="col_heading level0 col6" >Test_MSE</th>
+      <th id="T_19ab2_level0_col7" class="col_heading level0 col7" >Test_MAPE</th>
     </tr>
     <tr>
-      <th class="blank level1" >&nbsp;</th>
-      <th id="T_c16e5_level1_col0" class="col_heading level1 col0" >dim2</th>
-      <th id="T_c16e5_level1_col1" class="col_heading level1 col1" >dim3</th>
-      <th id="T_c16e5_level1_col2" class="col_heading level1 col2" >dim4</th>
-      <th id="T_c16e5_level1_col3" class="col_heading level1 col3" >dim5</th>
-      <th id="T_c16e5_level1_col4" class="col_heading level1 col4" >dim6</th>
-      <th id="T_c16e5_level1_col5" class="col_heading level1 col5" ></th>
-      <th id="T_c16e5_level1_col6" class="col_heading level1 col6" >MAE</th>
-      <th id="T_c16e5_level1_col7" class="col_heading level1 col7" >MAPE</th>
-      <th id="T_c16e5_level1_col8" class="col_heading level1 col8" >MSE</th>
-      <th id="T_c16e5_level1_col9" class="col_heading level1 col9" >RMSE</th>
-      <th id="T_c16e5_level1_col10" class="col_heading level1 col10" >MAE</th>
-      <th id="T_c16e5_level1_col11" class="col_heading level1 col11" >MAPE</th>
-      <th id="T_c16e5_level1_col12" class="col_heading level1 col12" >MSE</th>
-      <th id="T_c16e5_level1_col13" class="col_heading level1 col13" >RMSE</th>
+      <th class="index_name level0" >Modelo</th>
+      <th class="blank col0" >&nbsp;</th>
+      <th class="blank col1" >&nbsp;</th>
+      <th class="blank col2" >&nbsp;</th>
+      <th class="blank col3" >&nbsp;</th>
+      <th class="blank col4" >&nbsp;</th>
+      <th class="blank col5" >&nbsp;</th>
+      <th class="blank col6" >&nbsp;</th>
+      <th class="blank col7" >&nbsp;</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_c16e5_level0_row0" class="row_heading level0 row0" >0</th>
-      <td id="T_c16e5_row0_col0" class="data row0 col0" >0.000363</td>
-      <td id="T_c16e5_row0_col1" class="data row0 col1" >0.002368</td>
-      <td id="T_c16e5_row0_col2" class="data row0 col2" >0.009750</td>
-      <td id="T_c16e5_row0_col3" class="data row0 col3" >0.034109</td>
-      <td id="T_c16e5_row0_col4" class="data row0 col4" >0.056337</td>
-      <td id="T_c16e5_row0_col5" class="data row0 col5" >Ridge</td>
-      <td id="T_c16e5_row0_col6" class="data row0 col6" >44.6606</td>
-      <td id="T_c16e5_row0_col7" class="data row0 col7" >0.0430</td>
-      <td id="T_c16e5_row0_col8" class="data row0 col8" >5787.7932</td>
-      <td id="T_c16e5_row0_col9" class="data row0 col9" >76.0775</td>
-      <td id="T_c16e5_row0_col10" class="data row0 col10" >44.4758</td>
-      <td id="T_c16e5_row0_col11" class="data row0 col11" >0.0406</td>
-      <td id="T_c16e5_row0_col12" class="data row0 col12" >5823.8401</td>
-      <td id="T_c16e5_row0_col13" class="data row0 col13" >76.3141</td>
+      <th id="T_19ab2_level0_row0" class="row_heading level0 row0" >Ridge</th>
+      <td id="T_19ab2_row0_col0" class="data row0 col0" >89,141</td>
+      <td id="T_19ab2_row0_col1" class="data row0 col1" >17,063</td>
+      <td id="T_19ab2_row0_col2" class="data row0 col2" >7,946,063,067</td>
+      <td id="T_19ab2_row0_col3" class="data row0 col3" >9.91%</td>
+      <td id="T_19ab2_row0_col4" class="data row0 col4" >89,435</td>
+      <td id="T_19ab2_row0_col5" class="data row0 col5" >16,958</td>
+      <td id="T_19ab2_row0_col6" class="data row0 col6" >7,998,632,355</td>
+      <td id="T_19ab2_row0_col7" class="data row0 col7" >10.04%</td>
     </tr>
     <tr>
-      <th id="T_c16e5_level0_row1" class="row_heading level0 row1" >1</th>
-      <td id="T_c16e5_row1_col0" class="data row1 col0" >0.173561</td>
-      <td id="T_c16e5_row1_col1" class="data row1 col1" >0.360817</td>
-      <td id="T_c16e5_row1_col2" class="data row1 col2" >0.551881</td>
-      <td id="T_c16e5_row1_col3" class="data row1 col3" >0.714093</td>
-      <td id="T_c16e5_row1_col4" class="data row1 col4" >0.847961</td>
-      <td id="T_c16e5_row1_col5" class="data row1 col5" >Lasso</td>
-      <td id="T_c16e5_row1_col6" class="data row1 col6" >0.2762</td>
-      <td id="T_c16e5_row1_col7" class="data row1 col7" >0.0003</td>
-      <td id="T_c16e5_row1_col8" class="data row1 col8" >0.1451</td>
-      <td id="T_c16e5_row1_col9" class="data row1 col9" >0.3809</td>
-      <td id="T_c16e5_row1_col10" class="data row1 col10" >0.2744</td>
-      <td id="T_c16e5_row1_col11" class="data row1 col11" >0.0003</td>
-      <td id="T_c16e5_row1_col12" class="data row1 col12" >0.1448</td>
-      <td id="T_c16e5_row1_col13" class="data row1 col13" >0.3805</td>
+      <th id="T_19ab2_level0_row1" class="row_heading level0 row1" >Lasso</th>
+      <td id="T_19ab2_row1_col0" class="data row1 col0" >113,582</td>
+      <td id="T_19ab2_row1_col1" class="data row1 col1" >20,375</td>
+      <td id="T_19ab2_row1_col2" class="data row1 col2" >12,900,967,121</td>
+      <td id="T_19ab2_row1_col3" class="data row1 col3" >11.98%</td>
+      <td id="T_19ab2_row1_col4" class="data row1 col4" >111,077</td>
+      <td id="T_19ab2_row1_col5" class="data row1 col5" >20,075</td>
+      <td id="T_19ab2_row1_col6" class="data row1 col6" >12,338,054,113</td>
+      <td id="T_19ab2_row1_col7" class="data row1 col7" >12.12%</td>
     </tr>
     <tr>
-      <th id="T_c16e5_level0_row2" class="row_heading level0 row2" >2</th>
-      <td id="T_c16e5_row2_col0" class="data row2 col0" >0.114820</td>
-      <td id="T_c16e5_row2_col1" class="data row2 col1" >0.164142</td>
-      <td id="T_c16e5_row2_col2" class="data row2 col2" >0.046086</td>
-      <td id="T_c16e5_row2_col3" class="data row2 col3" >0.031888</td>
-      <td id="T_c16e5_row2_col4" class="data row2 col4" >0.037127</td>
-      <td id="T_c16e5_row2_col5" class="data row2 col5" >KNN</td>
-      <td id="T_c16e5_row2_col6" class="data row2 col6" >2704.7259</td>
-      <td id="T_c16e5_row2_col7" class="data row2 col7" >2.4129</td>
-      <td id="T_c16e5_row2_col8" class="data row2 col8" >74169244.3017</td>
-      <td id="T_c16e5_row2_col9" class="data row2 col9" >8612.1568</td>
-      <td id="T_c16e5_row2_col10" class="data row2 col10" >1600.6971</td>
-      <td id="T_c16e5_row2_col11" class="data row2 col11" >1.4299</td>
-      <td id="T_c16e5_row2_col12" class="data row2 col12" >29878659.1807</td>
-      <td id="T_c16e5_row2_col13" class="data row2 col13" >5466.1375</td>
+      <th id="T_19ab2_level0_row2" class="row_heading level0 row2" >KNN</th>
+      <td id="T_19ab2_row2_col0" class="data row2 col0" >5,576</td>
+      <td id="T_19ab2_row2_col1" class="data row2 col1" >1,612</td>
+      <td id="T_19ab2_row2_col2" class="data row2 col2" >31,086,354</td>
+      <td id="T_19ab2_row2_col3" class="data row2 col3" >1.38%</td>
+      <td id="T_19ab2_row2_col4" class="data row2 col4" >8,698</td>
+      <td id="T_19ab2_row2_col5" class="data row2 col5" >2,720</td>
+      <td id="T_19ab2_row2_col6" class="data row2 col6" >75,650,697</td>
+      <td id="T_19ab2_row2_col7" class="data row2 col7" >2.35%</td>
     </tr>
     <tr>
-      <th id="T_c16e5_level0_row3" class="row_heading level0 row3" >3</th>
-      <td id="T_c16e5_row3_col0" class="data row3 col0" >0.764832</td>
-      <td id="T_c16e5_row3_col1" class="data row3 col1" >0.679068</td>
-      <td id="T_c16e5_row3_col2" class="data row3 col2" >0.615531</td>
-      <td id="T_c16e5_row3_col3" class="data row3 col3" >0.560981</td>
-      <td id="T_c16e5_row3_col4" class="data row3 col4" >0.284168</td>
-      <td id="T_c16e5_row3_col5" class="data row3 col5" >DecisionTree</td>
-      <td id="T_c16e5_row3_col6" class="data row3 col6" >6.0886</td>
-      <td id="T_c16e5_row3_col7" class="data row3 col7" >0.0036</td>
-      <td id="T_c16e5_row3_col8" class="data row3 col8" >31415.8306</td>
-      <td id="T_c16e5_row3_col9" class="data row3 col9" >177.2451</td>
-      <td id="T_c16e5_row3_col10" class="data row3 col10" >0.0000</td>
-      <td id="T_c16e5_row3_col11" class="data row3 col11" >0.0000</td>
-      <td id="T_c16e5_row3_col12" class="data row3 col12" >0.0000</td>
-      <td id="T_c16e5_row3_col13" class="data row3 col13" >0.0000</td>
+      <th id="T_19ab2_level0_row3" class="row_heading level0 row3" >DecisionTree</th>
+      <td id="T_19ab2_row3_col0" class="data row3 col0" >53,540</td>
+      <td id="T_19ab2_row3_col1" class="data row3 col1" >35,456</td>
+      <td id="T_19ab2_row3_col2" class="data row3 col2" >2,866,578,606</td>
+      <td id="T_19ab2_row3_col3" class="data row3 col3" >25.02%</td>
+      <td id="T_19ab2_row3_col4" class="data row3 col4" >52,958</td>
+      <td id="T_19ab2_row3_col5" class="data row3 col5" >35,319</td>
+      <td id="T_19ab2_row3_col6" class="data row3 col6" >2,804,514,269</td>
+      <td id="T_19ab2_row3_col7" class="data row3 col7" >25.11%</td>
     </tr>
     <tr>
-      <th id="T_c16e5_level0_row4" class="row_heading level0 row4" >4</th>
-      <td id="T_c16e5_row4_col0" class="data row4 col0" >0.822813</td>
-      <td id="T_c16e5_row4_col1" class="data row4 col1" >0.763693</td>
-      <td id="T_c16e5_row4_col2" class="data row4 col2" >0.719062</td>
-      <td id="T_c16e5_row4_col3" class="data row4 col3" >0.681802</td>
-      <td id="T_c16e5_row4_col4" class="data row4 col4" >0.649315</td>
-      <td id="T_c16e5_row4_col5" class="data row4 col5" >SVR</td>
-      <td id="T_c16e5_row4_col6" class="data row4 col6" >79.2924</td>
-      <td id="T_c16e5_row4_col7" class="data row4 col7" >0.2376</td>
-      <td id="T_c16e5_row4_col8" class="data row4 col8" >5541985.4179</td>
-      <td id="T_c16e5_row4_col9" class="data row4 col9" >2354.1422</td>
-      <td id="T_c16e5_row4_col10" class="data row4 col10" >133.0144</td>
-      <td id="T_c16e5_row4_col11" class="data row4 col11" >0.2799</td>
-      <td id="T_c16e5_row4_col12" class="data row4 col12" >17917091.8001</td>
-      <td id="T_c16e5_row4_col13" class="data row4 col13" >4232.8586</td>
+      <th id="T_19ab2_level0_row4" class="row_heading level0 row4" >SVR</th>
+      <td id="T_19ab2_row4_col0" class="data row4 col0" >10,861</td>
+      <td id="T_19ab2_row4_col1" class="data row4 col1" >8,917</td>
+      <td id="T_19ab2_row4_col2" class="data row4 col2" >117,953,790</td>
+      <td id="T_19ab2_row4_col3" class="data row4 col3" >5.79%</td>
+      <td id="T_19ab2_row4_col4" class="data row4 col4" >10,908</td>
+      <td id="T_19ab2_row4_col5" class="data row4 col5" >8,987</td>
+      <td id="T_19ab2_row4_col6" class="data row4 col6" >118,987,553</td>
+      <td id="T_19ab2_row4_col7" class="data row4 col7" >5.89%</td>
     </tr>
     <tr>
-      <th id="T_c16e5_level0_row5" class="row_heading level0 row5" >5</th>
-      <td id="T_c16e5_row5_col0" class="data row5 col0" >0.823545</td>
-      <td id="T_c16e5_row5_col1" class="data row5 col1" >0.749054</td>
-      <td id="T_c16e5_row5_col2" class="data row5 col2" >0.907314</td>
-      <td id="T_c16e5_row5_col3" class="data row5 col3" >0.944865</td>
-      <td id="T_c16e5_row5_col4" class="data row5 col4" >0.747961</td>
-      <td id="T_c16e5_row5_col5" class="data row5 col5" >XGB</td>
-      <td id="T_c16e5_row5_col6" class="data row5 col6" >376.0907</td>
-      <td id="T_c16e5_row5_col7" class="data row5 col7" >0.2766</td>
-      <td id="T_c16e5_row5_col8" class="data row5 col8" >6059784.5000</td>
-      <td id="T_c16e5_row5_col9" class="data row5 col9" >2461.6630</td>
-      <td id="T_c16e5_row5_col10" class="data row5 col10" >352.3998</td>
-      <td id="T_c16e5_row5_col11" class="data row5 col11" >0.2559</td>
-      <td id="T_c16e5_row5_col12" class="data row5 col12" >3766907.7500</td>
-      <td id="T_c16e5_row5_col13" class="data row5 col13" >1940.8523</td>
+      <th id="T_19ab2_level0_row5" class="row_heading level0 row5" >XGB</th>
+      <td id="T_19ab2_row5_col0" class="data row5 col0" >2,501</td>
+      <td id="T_19ab2_row5_col1" class="data row5 col1" >446</td>
+      <td id="T_19ab2_row5_col2" class="data row5 col2" >6,254,799</td>
+      <td id="T_19ab2_row5_col3" class="data row5 col3" >0.28%</td>
+      <td id="T_19ab2_row5_col4" class="data row5 col4" >2,557</td>
+      <td id="T_19ab2_row5_col5" class="data row5 col5" >447</td>
+      <td id="T_19ab2_row5_col6" class="data row5 col6" >6,536,201</td>
+      <td id="T_19ab2_row5_col7" class="data row5 col7" >0.30%</td>
     </tr>
     <tr>
-      <th id="T_c16e5_level0_row6" class="row_heading level0 row6" >6</th>
-      <td id="T_c16e5_row6_col0" class="data row6 col0" >0.267600</td>
-      <td id="T_c16e5_row6_col1" class="data row6 col1" >0.580093</td>
-      <td id="T_c16e5_row6_col2" class="data row6 col2" >0.534392</td>
-      <td id="T_c16e5_row6_col3" class="data row6 col3" >0.657517</td>
-      <td id="T_c16e5_row6_col4" class="data row6 col4" >0.731195</td>
-      <td id="T_c16e5_row6_col5" class="data row6 col5" >MLP</td>
-      <td id="T_c16e5_row6_col6" class="data row6 col6" >224.8689</td>
-      <td id="T_c16e5_row6_col7" class="data row6 col7" >0.3986</td>
-      <td id="T_c16e5_row6_col8" class="data row6 col8" >3810155.6916</td>
-      <td id="T_c16e5_row6_col9" class="data row6 col9" >1951.9620</td>
-      <td id="T_c16e5_row6_col10" class="data row6 col10" >222.3614</td>
-      <td id="T_c16e5_row6_col11" class="data row6 col11" >0.3530</td>
-      <td id="T_c16e5_row6_col12" class="data row6 col12" >6167679.8511</td>
-      <td id="T_c16e5_row6_col13" class="data row6 col13" >2483.4814</td>
+      <th id="T_19ab2_level0_row6" class="row_heading level0 row6" >MLP</th>
+      <td id="T_19ab2_row6_col0" class="data row6 col0" >877</td>
+      <td id="T_19ab2_row6_col1" class="data row6 col1" >356</td>
+      <td id="T_19ab2_row6_col2" class="data row6 col2" >769,119</td>
+      <td id="T_19ab2_row6_col3" class="data row6 col3" >0.30%</td>
+      <td id="T_19ab2_row6_col4" class="data row6 col4" >765</td>
+      <td id="T_19ab2_row6_col5" class="data row6 col5" >348</td>
+      <td id="T_19ab2_row6_col6" class="data row6 col6" >584,483</td>
+      <td id="T_19ab2_row6_col7" class="data row6 col7" >0.30%</td>
     </tr>
   </tbody>
 </table>
-</div></div>
+</div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Resultados del Test BDS:
+                          BDS_Stat              p_value  \
+Ridge          0.39049622066326917   0.6961696494130757   
+Lasso           0.4356148820585588   0.6631161714171481   
+KNN              1.630669270536125  0.10296012401602096   
+DecisionTree  -0.18832926825651072   0.8506185430863035   
+SVR           -0.38461763210239674   0.7005207287186843   
+XGB             0.1449928439176952   0.8847165218115558   
+MLP            0.29506157773732233   0.7679468402170485   
+
+                                Interpretación  
+Ridge         Residuos independientes (i.i.d.)  
+Lasso         Residuos independientes (i.i.d.)  
+KNN           Residuos independientes (i.i.d.)  
+DecisionTree  Residuos independientes (i.i.d.)  
+SVR           Residuos independientes (i.i.d.)  
+XGB           Residuos independientes (i.i.d.)  
+MLP           Residuos independientes (i.i.d.)  
+</pre></div>
 </div>
-<ol class="arabic simple">
-<li><p>Ridge</p>
-<ul class="simple">
-<li><p>Test RMSE = 76.07, Train RMSE = 76.31 → brecha mínima → casi sin sobreajuste.</p></li>
-<li><p>p-value BDS (dim2) = 0.00036 (muy bajo) → residuos no independientes → indica estructura no lineal no capturada.</p></li>
-<li><p>Conclusión: modelo estable, pero puede mejorar agregando no linealidad (PolynomialFeatures).</p></li>
-</ul>
-</li>
-<li><p>Lasso</p>
-<ul class="simple">
-<li><p>Test RMSE = 0.38, Train RMSE = 0.38 → casi perfecto (irreal).</p></li>
-<li><p>p-value BDS = 0.17 (alto) → residuos parecen aleatorios → posible fuga de información.</p></li>
-</ul>
-</li>
-<li><p>DecisionTree</p>
-<ul class="simple">
-<li><p>Test RMSE = 177.24, Train RMSE = 0 → sobreajuste extremo.</p></li>
-<li><p>p-value BDS = 0.76 (alto) → residuos aleatorios → porque memorizó el Train.</p></li>
-</ul>
-</li>
-</ol>
+</div>
+</div>
 </section>
 <section id="conclusion">
 <h2><strong>Conclusión</strong><a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
-<p>Se evaluaron diferentes algoritmos de regresión (Ridge, Lasso, KNN, Decision Tree, SVR, XGB y MLP) con el objetivo de predecir el salario promedio, cuya media es <strong>157,018</strong>. La comparación se realizó utilizando métricas en el conjunto de prueba (MAE, MAPE, MSE, RMSE) y el test BDS para verificar la independencia de los residuos.</p>
-<p>En conjunto, se concluye que los modelos <strong>lineales regularizados (Ridge y Lasso) y los no lineales (KNN, DecisionTree, SVR, XGB)</strong> ofrecen soluciones sólidas y estadísticamente confiables, mientras que el MLP requiere precaución en su interpretación debido a posibles violaciones de independencia.</p>
-<p><strong>Principales hallazgos:</strong></p>
-<ol class="arabic simple">
-<li><p><strong>Ridge Regression</strong> presentó un <strong>RMSE de 76</strong>, lo que implica un error prácticamente nulo en relación con la media salarial. Sin embargo, el test BDS reveló dependencia no lineal en los residuos, lo que indica que el modelo no captura completamente la estructura del problema, posiblemente por falta de complejidad en las interacciones.</p></li>
-<li><p><strong>Lasso</strong> reportó un RMSE extremadamente bajo (0.38), lo que resulta poco realista y sugiere <strong>fuga de información (data leakage)</strong>. Este comportamiento amerita una revisión de correlaciones con la variable objetivo y la validación del pipeline.</p></li>
-<li><p><strong>MLP (Multilayer Perceptron)</strong> mostró un <strong>RMSE de 1,952</strong>, equivalente a un error relativo del <strong>1.24%</strong> respecto a la media salarial. Además, los residuos son independientes según el test BDS, lo que evidencia un modelo estable, robusto y sin señales de sobreajuste. Esto convierte a MLP en una alternativa sólida para producción.</p></li>
-<li><p><strong>Decision Tree</strong> arrojó un RMSE bajo en test <strong>(177)</strong> pero con error <strong>cero en entrenamiento</strong>, lo que indica sobreajuste severo y poca capacidad de generalización.</p></li>
-<li><p><strong>KNN, SVR y XGB</strong> presentaron errores significativamente más altos que Ridge y MLP, por lo que no se consideran competitivos en su configuración actual.</p></li>
-</ol>
+<section id="resultados-del-test-bds">
+<h3><strong>Resultados del Test BDS</strong><a class="headerlink" href="#resultados-del-test-bds" title="Link to this heading">#</a></h3>
+<p>Todos los modelos (Ridge, Lasso, KNN, Decision Tree, SVR, XGB y MLP) muestran <strong>p-values &gt; 0.05</strong>, lo que significa que <strong>no rechazamos la hipótesis nula de independencia.</strong></p>
+<p>Los <strong>residuos parecen ser i.i.d. (independientes e idénticamente distribuidos)</strong>, lo cual es deseable en un modelo de regresión, porque indica que no hay evidencia de <strong>dependencia no lineal</strong> no explicada por los modelos.</p>
+<p>El <strong>KNN</strong> fue el que más cerca estuvo del umbral (p = 0.103), pero aun así se mantiene dentro del rango aceptable.</p>
+<p>Modelos como <strong>DecisionTree y XGB</strong> tienen p-values muy altos (&gt;0.80), lo que refuerza la idea de que sus residuos son bastante aleatorios.</p>
+<p><strong>En conclusión:</strong> ningún modelo presenta problemas serios de dependencia en los residuos, lo cual respalda la validez de las métricas que ya calculaste (RMSE, MAE, MSE, MAPE).</p>
+</section>
 <section id="conclusion-general">
 <h3>Conclusión general:<a class="headerlink" href="#conclusion-general" title="Link to this heading">#</a></h3>
-<p>Los resultados muestran que <strong>Ridge y MLP</strong> son los modelos más prometedores. Ridge ofrece la mejor precisión en términos absolutos, aunque con evidencia de dependencia no lineal que puede mitigarse incorporando características polinómicas o interacciones. MLP, por su parte, logra un desempeño sobresaliente con residuos independientes, lo que lo convierte en la opción más confiable para entornos productivos, especialmente cuando se prioriza robustez frente a posibles sesgos del modelo.</p>
+<p>El análisis comparativo de modelos de regresión, evaluados mediante métricas en la escala original de USD (MAE, MSE, RMSE y MAPE), evidencia diferencias significativas en la capacidad predictiva de los algoritmos considerados.</p>
+<p>Los modelos <strong>XGBoost (XGB) y Multilayer Perceptron (MLP)</strong> presentan un desempeño claramente superior, con errores absolutos y relativos mínimos (MAPE &lt; 1%), además de una adecuada capacidad de generalización entre los conjuntos de entrenamiento y prueba. Esto los posiciona como las alternativas más robustas y confiables para la predicción de salarios en este contexto.</p>
+<p>Los modelos <strong>KNN</strong> y <strong>SVR</strong> alcanzan resultados aceptables, con errores moderados (MAPE entre 2% y 6%), aunque no logran la precisión observada en XGB y MLP.</p>
+<p>En contraste, los enfoques lineales <strong>(Ridge y Lasso)</strong> muestran un desempeño considerablemente inferior, con errores altos (MAPE ~10–12%) que reflejan su limitación para capturar relaciones no lineales presentes en los datos. Finalmente, <strong>Decision Tree</strong> se caracteriza por una gran inestabilidad y altos errores relativos (MAPE ~25%), lo que lo hace inadecuado como solución final.</p>
+<p>En conjunto, los resultados indican que <strong>la incorporación de modelos no lineales y de mayor complejidad</strong> (en particular, XGB y MLP) constituye la mejor estrategia para abordar este problema de predicción de salarios, maximizando precisión y consistencia en las estimaciones.</p>
+</section>
+<section id="recomendaciones">
+<h3>📌 Recomendaciones<a class="headerlink" href="#recomendaciones" title="Link to this heading">#</a></h3>
+<p>Con base en el análisis comparativo de modelos (MAE, MSE, RMSE y MAPE en escala USD), se sugieren las siguientes recomendaciones para la predicción de salarios:</p>
+<ul class="simple">
+<li><p>✅ <strong>Priorizar modelos de mejor desempeño:</strong><br />
+Implementar <strong>XGBoost (XGB)</strong> o <strong>Multilayer Perceptron (MLP)</strong> como modelos principales, ya que alcanzan los <strong>menores errores relativos (MAPE &lt; 1%)</strong> y muestran gran capacidad de generalización.</p></li>
+<li><p>⚖️ <strong>Usar modelos intermedios como referencia:</strong><br />
+<strong>KNN</strong> y <strong>SVR</strong> pueden considerarse como alternativas de contraste, con resultados moderados (MAPE entre 2% y 6%).</p></li>
+<li><p>❌ <strong>Evitar modelos lineales en producción:</strong><br />
+<strong>Ridge</strong> y <strong>Lasso</strong> presentan errores elevados (~10–12%), lo que indica limitaciones en la captura de relaciones complejas.</p></li>
+<li><p>⚠️ <strong>Descartar árboles de decisión simples:</strong><br />
+El <strong>Decision Tree</strong> mostró un error sustancial (MAPE ~25%) y alta inestabilidad, por lo que no se recomienda su uso en este contexto.</p></li>
+</ul>
+<p>📊 <strong>Recomendación global:</strong><br />
+Adoptar un enfoque basado en <strong>modelos no lineales y de mayor complejidad (XGB y MLP)</strong> garantiza mayor <strong>precisión y consistencia</strong> en las estimaciones salariales.</p>
 </section>
 </section>
 </section>
@@ -2132,8 +2190,17 @@ MLP: BDS Stat=1.109, p-value=0.268
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Welcome to your Jupyter Book</p>
+        <p class="prev-next-title">Modelos Clásicos vs. Transformers: Un Enfoque Comparativo en Regresión Tabular</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="SalPredTrans_Improved_Grid.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><strong>Modelo original: SalPred‑Trans — Transformer tabular cuantílico + Conformal Prediction</strong></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -2183,10 +2250,12 @@ MLP: BDS Stat=1.109, p-value=0.268
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocesamiento">5. Preprocesamiento</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelos-y-busqueda-de-hiperparametros">6. Modelos y búsqueda de hiperparámetros</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funciones-auxiliares">7. Funciones auxiliares</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loop-para-evaluar-modelos-graficas-bds">8. Loop para evaluar modelos + gráficas + BDS</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataframe-de-resultados-y-grafico-comparativo">9. DataFrame de resultados y gráfico comparativo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loop-para-evaluar-modelos-graficas-bds-resultados-en-log">8. Loop para evaluar modelos + gráficas + BDS - resultados en Log</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataframe-de-resultados-y-grafico-comparativo-salario-en-usd">9. DataFrame de resultados y gráfico comparativo - Salario en USD</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion"><strong>Conclusión</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resultados-del-test-bds"><strong>Resultados del Test BDS</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-general">Conclusión general:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recomendaciones">📌 Recomendaciones</a></li>
 </ul>
 </li>
 </ul>
@@ -2203,7 +2272,7 @@ MLP: BDS Stat=1.109, p-value=0.268
   <div class="footer-item">
     
 <p class="component-author">
-By Laura Cardona Ahumada, Elian Martinez Orozco, Evelyn Mondul y Luis Pino Perez
+By The Jupyter Book Community
 </p>
 
   </div>
